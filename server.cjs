@@ -103,16 +103,29 @@ app.get('/get-restarunts-details',async function(request,response){
     }
 })
 
-app.delete('/delete-restarunts/:id', async function(request,response){
-    try{
-        await Restarunt.findByIdAndDelete(request.params.id)
-        response.status(200).json({"status":"Succesfull", "Message":"Deleted Successfully"});
+app.delete('/delete-restarunts/:id', async function(request, response) {
+    try {
+        const restaurant = await Restarunt.findById(request.params.id)
+        if(restaurant) {
+            await Restarunt.findByIdAndDelete(request.params.id)
+            response.status(200).json({
+                "status" : "success",
+                "message" : "deleted successfully"
+            })
+        } else { //restaurant : null
+            response.status(404).json({
+                "status" : "failure",
+                "message" : "entry not found"
+            })
+        }
+    } catch(error) {
+        response.status(500).json({
+            "status" : "failure",
+            "message" : "could not delete",
+            "error" : error
+        })
     }
-    catch(error)
-    {
-        response.status(500).json({"status":"Unsuccessful","Message":"ID not found"});
-    }
-})
+}) 
 
 
 
