@@ -103,6 +103,17 @@ app.get('/get-restarunts-details',async function(request,response){
     }
 })
 
+app.delete('/delete-restarunts/:id', async function(request,response){
+    try{
+        await Restarunt.findByIdAndDelete(request.params.id)
+        response.status(200).json({"status":"Succesfull", "Message":"Deleted Successfully"});
+    }
+    catch(error)
+    {
+        response.status(500).json({"status":"Unsuccessful","Message":"ID not found"});
+    }
+})
+
 
 
 
