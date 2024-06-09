@@ -11,7 +11,7 @@ const port =process.env.PORT||8000
  async function connectToDb()
  {
     try{
-   await mongoose.connect('mongodb+srv://Dheena:dheena123@cluster0.ser6ewc.mongodb.net/swiggey?retryWrites=true&w=majority')
+   await mongoose.connect(process.env.uri)
 
    app.listen(port,function ()
    {console.log(`server is running on ${port}`)})
